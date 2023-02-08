@@ -31,6 +31,16 @@ namespace NotePad.MVVM.ViewModels
             } 
         }
 
+        public DateTime DateCreate 
+        {
+            get => note.DateCreate;
+            set
+            {
+                note.DateCreate = value;
+                OnPropertyChanged();
+            }
+        }
+
         public NoteViewModel(Note note)
         {
             this.note = note;

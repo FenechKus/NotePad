@@ -11,10 +11,13 @@ namespace NotePad.MVVM.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
+        public DateTime DateCreate { get; set; }
+
         public Note(string title, string description)
         {
             Title = title;
             Description = description;
+            DateCreate = DateTime.Now;
         }
     }
 }

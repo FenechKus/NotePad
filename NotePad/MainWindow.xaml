@@ -17,13 +17,18 @@
         </Grid.RowDefinitions>
 
         <StackPanel>
+            <Button Content="SortByTitle" Command="{Binding SortyngByTitleCommand}"/>
+            <Button Content="SortByTitleDec" Command="{Binding SortyngByTitleDecCommand}"/>
             <Button Content="Add" Command="{Binding AddCommand}"/>
             <Button Content="Remove" Command="{Binding RemoveCommand}"/>
             <ListBox ItemsSource="{Binding Notes}" 
                      SelectedItem="{Binding SelectNote}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Title}"/>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}"/>
+                            <TextBlock Text="{Binding DateCreate}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

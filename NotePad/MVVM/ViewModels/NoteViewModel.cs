@@ -21,25 +21,16 @@ namespace NotePad.MVVM.ViewModels
             }
         }
 
-        public string Description
+        public string Text
         { 
-            get => note.Description;
+            get => note.Text;
             set
             {
-                note.Description = value;
+                note.Text = value;
                 OnPropertyChanged();
             } 
         }
 
-        public DateTime DateCreate 
-        {
-            get => note.DateCreate;
-            set
-            {
-                note.DateCreate = value;
-                OnPropertyChanged();
-            }
-        }
 
         public NoteViewModel(Note note)
         {

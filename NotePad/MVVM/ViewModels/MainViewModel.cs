@@ -17,16 +17,18 @@ namespace NotePad.MVVM.ViewModels
         //private readonly Note note;
         private readonly RelayCommands addCommand;
         private readonly RelayCommands removeCommand;
-        private readonly RelayCommands sortByTitle;
-        private readonly RelayCommands sortByTitleDec;
+        private readonly RelayCommands sortByTitleCommand;
+        private readonly RelayCommands sortByTitleDecCimmand;
+        private readonly RelayCommands saveCommand;
 
         public MainViewModel()
         {
             notes = new ObservableCollection<NoteViewModel>();
             addCommand = new RelayCommands(Add);
             removeCommand = new RelayCommands(Remove, obj => Notes.Count> 0);
-            sortByTitle = new RelayCommands(SortByTitle, obj => Notes.Count > 1);
-            sortByTitleDec = new RelayCommands(SortByTitleDec, obj => Notes.Count > 1);
+            sortByTitleCommand = new RelayCommands(SortByTitle, obj => Notes.Count > 1);
+            sortByTitleDecCimmand = new RelayCommands(SortByTitleDec, obj => Notes.Count > 1);
+            saveCommand = new RelayCommands(Save, obj => selectNote != null);
         }
 
         public ObservableCollection<NoteViewModel> Notes
@@ -51,18 +53,23 @@ namespace NotePad.MVVM.ViewModels
             get => removeCommand;
         }
 
+        public RelayCommands SaveCommand
+        {
+            get => saveCommand;
+        }
+
         public RelayCommands SortyngByTitleCommand
         {
-            get => sortByTitle;
+            get => sortByTitleCommand;
         }
         public RelayCommands SortyngByTitleDecCommand
         {
-            get => sortByTitleDec;
+            get => sortByTitleDecCimmand;
         }
 
         private void Add(object? param)
         {
-            Notes.Add(new NoteViewModel(new Note("Безымянный", "")));
+            Notes.Add(new NoteViewModel(new Note {  Title= "Безымянный", Text= "" }));
         }
 
         private void Remove(object? param)
@@ -70,6 +77,15 @@ namespace NotePad.MVVM.ViewModels
             if (SelectNote is null) 
                 return;
                 Notes.Remove(SelectNote);
+        }
+
+        private void Save(object? obj)
+        {
+            using (Test2Context db = new Test2Context())
+            {
+                db.Entry(new Note { Title = $"{selectNote.Title}", Text =$"{selectNote.Text}"}).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         private void SortByTitleDec(object? param)

@@ -21,13 +21,13 @@
             <Button Content="SortByTitleDec" Command="{Binding SortyngByTitleDecCommand}"/>
             <Button Content="Add" Command="{Binding AddCommand}"/>
             <Button Content="Remove" Command="{Binding RemoveCommand}"/>
+            <Button Content="Save" Command="{Binding SaveCommand}"/>
             <ListBox ItemsSource="{Binding Notes}" 
                      SelectedItem="{Binding SelectNote}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding Title}"/>
-                            <TextBlock Text="{Binding DateCreate}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

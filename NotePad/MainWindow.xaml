@@ -6,36 +6,43 @@
         xmlns:local="clr-namespace:NotePad"
         xmlns:viewmodel="clr-namespace:NotePad.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="NotePad" Height="450" Width="800">
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <StackPanel>
-            <Button Content="SortByTitle" Command="{Binding SortyngByTitleCommand}"/>
-            <Button Content="SortByTitleDec" Command="{Binding SortyngByTitleDecCommand}"/>
-            <Button Content="Add" Command="{Binding AddCommand}"/>
-            <Button Content="Remove" Command="{Binding RemoveCommand}"/>
-            <ListBox ItemsSource="{Binding Notes}" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox ItemsSource="{Binding Notes}" 
                      SelectedItem="{Binding SelectNote}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding Title}"/>
+                            <TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
                             <TextBlock Text="{Binding DateCreate}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
-        <StackPanel Grid.Row="1" DataContext="{Binding SelectNote}">
-            <TextBox Height="100" Text="{Binding Title}"/>
-            <TextBox Height="100" Text="{Binding Description}" TextWrapping="WrapWithOverflow"/>
-        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <StackPanel DataContext="{Binding SelectNote}">
+                <TextBlock Text="Title:"/>
+                <TextBox Grid.Row="0" Text="{Binding Title}" VerticalAlignment="Stretch" Height="60" TextWrapping="Wrap"/>
+                <TextBlock Text="Text:"/>
+                <TextBox Grid.Row="1" Text="{Binding Description}" VerticalAlignment="Stretch" Height="140" TextWrapping="Wrap"/>
+            </StackPanel>
+            <UniformGrid Grid.Row="1" Margin="2">
+                <Button Margin="2 5" Content="Add" Command="{Binding AddCommand}"/>
+                <Button Margin="2 5" Content="Remove" Command="{Binding RemoveCommand}"/>
+                <Button Margin="2 5" Content="Save"/>
+                <Button Margin="2 5" Content="Sorted By Title" Command="{Binding SortyngByTitleCommand}"/>
+            </UniformGrid>
+        </Grid>
     </Grid>
 </Window>

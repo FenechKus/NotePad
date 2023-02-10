@@ -11,6 +11,11 @@ namespace NotePad.MVVM.ViewModels
     {
         private readonly Note note;
 
+        public Note Note
+        {
+            get { return note; }
+        }
+
         public string Title
         {
             get => note.Title;
@@ -21,22 +26,22 @@ namespace NotePad.MVVM.ViewModels
             }
         }
 
-        public string Description
+        public string Text
         { 
-            get => note.Description;
+            get => note.Text;
             set
             {
-                note.Description = value;
+                note.Text = value;
                 OnPropertyChanged();
             } 
         }
 
-        public DateTime DateCreate 
+        public int Id
         {
-            get => note.DateCreate;
+            get => note.Id;
             set
             {
-                note.DateCreate = value;
+                note.Id = value;
                 OnPropertyChanged();
             }
         }

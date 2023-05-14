@@ -85,7 +85,18 @@ namespace NotePad.MVVM.ViewModels
         {
             if (SelectNote is null) 
                 return;
-                Notes.Remove(SelectNote);
+            using (var db = new Test2Context())
+            {
+                foreach (var item in notes)
+                {
+                    if (item.Id == SelectNote.Id)
+                    {
+                        db.Remove(item.Note);
+                    }
+                }
+                    db.SaveChanges();
+            }
+            Notes.Remove(SelectNote);
         }
 
         private void Save(object? obj)

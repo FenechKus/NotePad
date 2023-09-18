@@ -16,7 +16,7 @@ namespace NotePad.MVVM.ViewModels
     {
         private ObservableCollection<NoteViewModel> notes;
         private NoteViewModel? selectNote;
-        //private readonly Note note;
+        private readonly Note note;
         private readonly RelayCommands addCommand;
         private readonly RelayCommands removeCommand;
         private readonly RelayCommands sortByTitle;
@@ -85,18 +85,22 @@ namespace NotePad.MVVM.ViewModels
         {
             if (SelectNote is null) 
                 return;
-            using (var db = new Test2Context())
+            try
             {
-                foreach (var item in notes)
+                using (var db = new Test2Context())
                 {
-                    if (item.Id == SelectNote.Id)
+                    foreach (var item in notes)
                     {
-                        db.Remove(item.Note);
+                        if (item.Id == SelectNote.Id)
+                        {
+                            db.Remove(item.Note);
+                        }
                     }
-                }
                     db.SaveChanges();
+                }
             }
-            Notes.Remove(SelectNote);
+            catch (Exception) {}
+            finally { Notes.Remove(SelectNote); }
         }
 
         private void Save(object? obj)
